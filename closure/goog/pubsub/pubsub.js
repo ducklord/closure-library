@@ -104,11 +104,12 @@ goog.inherits(goog.pubsub.PubSub, goog.Disposable);
  * the topic via {@link #unsubscribeByKey}.
  *
  * @param {string} topic Topic to subscribe to.
- * @param {Function} fn Function to be invoked when a message is published to
- *     the given topic.
- * @param {Object=} opt_context Object in whose context the function is to be
+ * @param {function(this:CONTEXT, ...?)} fn Function to be invoked when a
+ *     message is published to the given topic.
+ * @param {CONTEXT=} opt_context Object in whose context the function is to be
  *     called (the global scope if none).
  * @return {number} Subscription key.
+ * @template CONTEXT
  */
 goog.pubsub.PubSub.prototype.subscribe = function(topic, fn, opt_context) {
   var keys = this.topics_[topic];
@@ -140,11 +141,12 @@ goog.pubsub.PubSub.prototype.subscribe = function(topic, fn, opt_context) {
  * {@link #unsubscribeByKey}.
  *
  * @param {string} topic Topic to subscribe to.
- * @param {Function} fn Function to be invoked once and then unsubscribed when
+ * @param {function(this:CONTEXT, ...?)} fn Function to be invoked once and then unsubscribed when
  *     a message is published to the given topic.
- * @param {Object=} opt_context Object in whose context the function is to be
+ * @param {CONTEXT=} opt_context Object in whose context the function is to be
  *     called (the global scope if none).
  * @return {number} Subscription key.
+ * @template CONTEXT
  */
 goog.pubsub.PubSub.prototype.subscribeOnce = function(topic, fn, opt_context) {
   // Behold the power of lexical closures!
@@ -161,10 +163,11 @@ goog.pubsub.PubSub.prototype.subscribeOnce = function(topic, fn, opt_context) {
  * Returns a Boolean indicating whether a subscription was removed.
  *
  * @param {string} topic Topic to unsubscribe from.
- * @param {Function} fn Function to unsubscribe.
- * @param {Object=} opt_context Object in whose context the function was to be
+ * @param {function(this:CONTEXT, ...?)} fn Function to unsubscribe.
+ * @param {CONTEXT=} opt_context Object in whose context the function was to be
  *     called (the global scope if none).
  * @return {boolean} Whether a matching subscription was removed.
+ * @template CONTEXT
  */
 goog.pubsub.PubSub.prototype.unsubscribe = function(topic, fn, opt_context) {
   var keys = this.topics_[topic];
